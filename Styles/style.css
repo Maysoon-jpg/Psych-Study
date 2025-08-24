@@ -78,6 +78,7 @@ body {
   justify-content: center;
   border-radius: 5px;
   color: rgb(199, 199, 199);
+   cursor: pointer;
 }
 
 .subject-content:hover {
@@ -116,6 +117,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: 0.2s;
+  cursor: pointer;
 
 }
 
@@ -172,7 +174,8 @@ body {
   color: white;
   border-radius: 5px;
   border: none;
-  background-color: rgb(88, 88, 88);
+  background-color: rgb(63, 204, 145);
+  transition: 0.3s;
 
 }
 
@@ -308,7 +311,7 @@ body {
 }
 
 .styled-btn {
-  background-color: #70ce73; /* nice green */
+  background-color: #338153; /* nice green */
   color: white;
   padding: 10px 20px;
   margin: 5px 0;
