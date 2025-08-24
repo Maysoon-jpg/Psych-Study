@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--instructions (for myself)
+ DO NOT DELETE LOCAL STORAGE OR FORAGE UNLESS CERTAIN
+ - first duplicate the subject content div but rename necessary parts to make it the new subject
+ - in js script copy and paste the object and do same thing with renaming
+ -
+
+ 
+ 
+ 
+ 
+ 
+ 
+ -->
+<html>
+
+
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+  <title>Study Tracker</title>
+  <link rel="stylesheet" href="Styles/style.css">
+  <style>
+
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+
+
+</head>
+
+<body>
+  <main>
+    <div class="body-div">
+      <div class="main-div">
+
+        <div class="sidebar">
+          <div class="subject-content rm" onclick="changeColourOnClick(document.querySelector('.rm')); addHTML(rm);">
+            <p class="subject-texts">Research Methods</p>
+          </div>
+          <div class="subject-content si" onclick="changeColourOnClick(document.querySelector('.si')); addHTML(si);">
+            <p class="subject-texts">Social Influence</p>
+          </div>
+          <div class="subject-content at" onclick="changeColourOnClick(document.querySelector('.at')); addHTML(at)">
+            <p class="subject-texts">Attatchment</p>
+          </div>
+          <div class="subject-content ap"
+            onclick="changeColourOnClick(document.querySelector('.ap'));  addHTML(ap)">
+            <p class="subject-texts">Approaches</p>
+          </div>
+
+
+
+
+
+
+        </div>
+        <div class="main-bar">
+
+
+          <div class='questions-frame'>
+            <div class="question-title-frame">
+              <div class="flag-button" onclick="addFlagClass();"></div>
+              <span class="title-text"> Social learning theory 16 marker</span>
+            </div>
+
+
+          </div>
+          <div class="enter-questions-text">
+            <div class="question-title" contenteditable="true">
+
+            </div>
+            <div class="question-info" contenteditable="true"></div>
+            <button class="save-button" onclick="addEntry('ap'); cycleTopicEntries('ap');">ENTER</button>
+
+
+            <input type="file" id="file-upload" class="file-input" hidden>
+            <label for="file-upload" class="file-button">UPLOAD PIC</label>
+
+          </div>
+
+
+
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="MainWeb3.js"></script>
+
+
+</body>
+
+</html>
