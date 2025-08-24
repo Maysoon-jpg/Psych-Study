@@ -1,40 +1,165 @@
-//didn't code the paste stuff myself
+//didn't code the paste stuff myself --up to line 162
 
-document.addEventListener("paste", function (e) {
+
+// =====================
+// Configuration
+// =====================
+const STORAGE_KEY = "pastedImages"; // array of images saved in localForage
+
+// =====================
+// Insert image at cursor
+// =====================
+function insertImageAtCursor(img) {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) {
+    // fallback: just append to focused contenteditable
+    const active = document.activeElement;
+    if (active && active.isContentEditable) {
+      active.appendChild(img);
+    }
+    return;
+  }
+
+  const range = sel.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(img);
+
+  // move caret after image
+  range.setStartAfter(img);
+  range.setEndAfter(img);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+// =====================
+// Show small preview
+// =====================
+function createImageElement(src) {
+  const img = document.createElement("img");
+  img.className = "image-input";
+  img.src = src;
+  img.style.maxWidth = "500px";
+  img.style.maxHeight = "500px";
+  img.style.objectFit = "contain";
+  img.style.cursor = "pointer";
+  img.style.margin = "4px";
+  return img;
+}
+
+// =====================
+// Save images to localForage
+// =====================
+function saveImage(dataUrl) {
+  localforage.getItem(STORAGE_KEY).then(images => {
+    const arr = Array.isArray(images) ? images : [];
+    arr.push(dataUrl);
+    localforage.setItem(STORAGE_KEY, arr);
+  });
+}
+
+// =====================
+// Load saved images
+// =====================
+function loadSavedImages() {
+  localforage.getItem(STORAGE_KEY).then(images => {
+    if (!images) return;
+    images.forEach(src => {
+      const img = createImageElement(src);
+      insertImageAtCursor(img); // load into active place (fallback: append)
+    });
+  });
+}
+
+// =====================
+// Paste handler
+// =====================
+document.addEventListener("paste", e => {
+  const targetDiv = e.target.closest("[contenteditable='true']");
+  if (!targetDiv) return;
+
   const items = e.clipboardData?.items;
   if (!items) return;
+
+  let handledImage = false;
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     if (item.kind === "file") {
-      e.preventDefault();
+      e.preventDefault(); // only block default if pasting an image
+      handledImage = true;
+
       const file = item.getAsFile();
-
-      const img = document.createElement("img");
-      img.className = "image-input";
-      img.style.maxWidth = "200px";
-      img.style.maxHeight = "200px";
-      img.style.objectFit = "contain";
-      img.style.cursor = "pointer";
-
       const reader = new FileReader();
       reader.onload = function (event) {
-        img.src = event.target.result;
+        const dataUrl = event.target.result;
+        const img = createImageElement(dataUrl);
+        insertImageAtCursor(img);
+        saveImage(dataUrl);
       };
       reader.readAsDataURL(file);
-
-      // Append to the element the user actually pasted into
-      const targetDiv = e.target.closest(".question-info, .text-box");
-      if (targetDiv) {
-        targetDiv.appendChild(img);
-      } else {
-        console.warn("Paste target not found!");
-      }
-
-      break; // only handle first file
     }
   }
+
+  // if no image, let text paste normally
+  if (!handledImage) return;
 });
+
+// =====================
+// Large overlay preview
+// =====================
+function showLargePreview(src) {
+  // remove any existing overlay
+  const existing = document.querySelector(".image-preview-overlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "image-preview-overlay";
+  Object.assign(overlay.style, {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0,0,0,0.7)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+    cursor: "zoom-out",
+    overflow: "auto"
+  });
+
+  const largeImg = document.createElement("img");
+  largeImg.src = src;
+  Object.assign(largeImg.style, {
+    maxWidth: "80%",
+    maxHeight: "80%",
+    objectFit: "contain",
+    boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+    borderRadius: "8px"
+  });
+
+  overlay.appendChild(largeImg);
+
+  overlay.addEventListener("click", () => overlay.remove());
+
+  document.body.appendChild(overlay);
+}
+
+// =====================
+// Global click handler
+// =====================
+document.addEventListener("click", e => {
+  const img = e.target;
+  if (img.classList.contains("image-input")) {
+    showLargePreview(img.src);
+  }
+});
+
+// =====================
+// Init
+// =====================
+loadSavedImages();
 
 
 
@@ -52,7 +177,7 @@ const rm = {
            
 
           </div> <button class="save-button" onclick="saveText(rm.saveId);">SAVE</button>
-           <img src="Images/pencil.png" class="pencil-image" onclick="pencilClick(); ">`
+           `
   },
   essay: {
     essayPageOne:''
