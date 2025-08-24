@@ -320,6 +320,7 @@ function addEntry(topic) {
   localStorage.setItem('entryNumber', JSON.stringify(entryNum));
 
   entryContainer.innerHTML = ''
+  titleContainer.innerHTML = ''
 }
 
 
@@ -395,7 +396,7 @@ function openEssayPageTwo(topic) {
   mainPage.innerHTML = `
     <div class='questions-frame questions-frame${topic}'></div>
     <div class="enter-questions-text">
-      <div class="question-title" contenteditable="true">enter</div>
+      <div class="question-title" contenteditable="true">enter text</div>
       <div class="question-info" contenteditable="true"></div>
       <button class="save-button" onclick="addEntry('${topic}'); cycleTopicEntries('${topic}');">ENTER</button>
     </div>
