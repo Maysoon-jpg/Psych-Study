@@ -177,7 +177,7 @@ const rm = {
            
 
           </div> <button class="save-button" onclick="saveText(rm.saveId);">SAVE</button>
-           `
+           <img src="Images/pencil.png" class="pencil-image" onclick="pencilClick(); ">`
   },
   essay: {
     essayPageOne:''

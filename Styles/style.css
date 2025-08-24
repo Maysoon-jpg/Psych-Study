@@ -42,7 +42,7 @@ body {
 }
 
 .main-div {
-  height: 70%;
+  height: 60%;
   width: 800px;
   background-color: rgba(30, 30, 30, 255);
   display: flex;
@@ -175,22 +175,7 @@ body {
 
 }
 
-.file-button {
-  height: 40px;
-  position: absolute;
-  bottom: 9px;
-  right: 80px;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  background-color: rgb(88, 88, 88);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-
-}
 
 .file-button:hover {
   background-color: rgb(54, 54, 54);
