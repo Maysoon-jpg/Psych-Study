@@ -161,20 +161,18 @@ document.addEventListener("click", e => {
 // =====================
 loadSavedImages();
 
-// ✅ Export both localStorage + localforage
 async function exportData() {
   let exportObj = {};
 
-  // 1. Export localStorage
+  
   exportObj.localStorage = { ...localStorage };
 
-  // 2. Export localforage
   exportObj.localforage = {};
   await localforage.iterate((value, key) => {
     exportObj.localforage[key] = value;
   });
 
-  // 3. Save as file
+  
   const blob = new Blob([JSON.stringify(exportObj)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
@@ -188,7 +186,7 @@ async function exportData() {
 
 document.getElementById("exportBtn").addEventListener("click", exportData);
 
-// ✅ Import both localStorage + localforage
+
 document.getElementById("importInput").addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -198,14 +196,14 @@ document.getElementById("importInput").addEventListener("change", async (e) => {
     try {
       const data = JSON.parse(event.target.result);
 
-      // Restore localStorage
+      
       if (data.localStorage) {
         for (let key in data.localStorage) {
           localStorage.setItem(key, data.localStorage[key]);
         }
       }
 
-      // Restore localforage
+      
       if (data.localforage) {
         for (let key in data.localforage) {
           await localforage.setItem(key, data.localforage[key]);
