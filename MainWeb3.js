@@ -321,6 +321,31 @@ const ap = {
     essayPageTwo: 'html for content'//used function for this
   }
 }
+
+const bp = {
+
+  saveId: 'saveBp',
+  essaySaveId: 'essaySaveBp',
+  link: `<div class="pageOneBar"; onclick="openInfoPage(bp);"><p class="info-text">Biopsychology> info</p></div>
+          <div class="pageOneBar" onclick="openEssayPageTwo('bp'); cycleTopicEntries('bp');"><p class="essay-text">Biopsychology> questions</p></div>`,
+  info: {
+    getContentPage: () => ` <div class="text-box" contenteditable="false">
+          ${localStorage.getItem("saveBp") || ""}
+           
+           
+           
+
+          </div> <button class="save-button" onclick="saveText(bp.saveId);">SAVE</button>
+           <img src="Images/pencil.png" class="pencil-image" onclick="pencilClick(); ">`
+  },
+  essay: {
+    essayPageOne: `<div class="pageOneBar" onclick="openEssayPageTwo('bp'); cycleTopicEntries('bp');">
+<p class="info-text">Biopsychology</p></div>`
+,
+
+    essayPageTwo: 'html for content'//used function for this
+  }
+}
 /* localStorage.clear() 
 localforage.clear().then(function () {
   console.log("All LocalForage data has been cleared!");

@@ -78,7 +78,7 @@ body {
   justify-content: center;
   border-radius: 5px;
   color: rgb(199, 199, 199);
-   cursor: pointer;
+  cursor: pointer;
 }
 
 .subject-content:hover {
